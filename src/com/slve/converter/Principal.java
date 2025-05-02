@@ -6,35 +6,45 @@ import java.util.Scanner;
 
 public class Principal {
   public static void main(String[] args) {
-    // Crear la conexion al servicio API
-    ConexionApi conexionApi = new ConexionApi();
 
-    // * Inicio - Blucle para el menu de opciones del Convertidor
+    // * Inicio - While para el menu de opciones del Convertidor
     while (true) {
       Scanner lectura = new Scanner(System.in);
 
-      String menuConvertidor = """
-          Imprimir el menú de opciones
+      String menuPrincipal = """
+          \n--------------------------------------------------
           
-          1. Dolar Americano (USD) >> Pesos Mexicano (MXN)
+                     Bienvenida(o) a la Aplicación
+          
+          1. Convertidor Uno
+          2. Convertidor Dos
           9. Salir de la Aplicación
+          
+          --------------------------------------------------
           """;
-      System.out.println(menuConvertidor);
-
-      System.out.println("Elija una opción: ");
+      System.out.println(menuPrincipal);
 
       // Inicio - Logica de validacion de la opcion elegida
       try {
-        var opcion = Integer.valueOf(lectura.next());
-        System.out.println(opcion);
 
-        // Condición para romper del bucle del menu de opciones
+        System.out.println("Elija una opción: ");
+        var opcion = Integer.valueOf(lectura.next());
+
+        // Condicion para romper el While del menu de opciones
         if (opcion == 9) {
+          System.out.println("Saliendo de la aplicación, gracias por utilizarla...");
           break;
         }
 
-        // Validar la conexion con el clienteHttp
-        conexionApi.clienteHttp();
+        // Asignar a las variables el codigo ISO de las monedas de acuerdo al metodo
+        String baseCode = base(opcion);
+        String targetCode = target(opcion);
+
+        System.out.println("Monedas elegidas: " + baseCode + " " +targetCode);
+
+        // Crear la conexion al servicio API
+        ConexionApi conexion = new ConexionApi();
+        conexion.clienteHttp(baseCode, targetCode);
 
       } catch (RuntimeException e) {
         System.out.println(e.getMessage());
@@ -43,5 +53,23 @@ public class Principal {
       // Fin - Logica de validacion de la opcion elegida
     }
     // * Fin - Blucle para el menu de opciones del Convertidor
+  }
+
+  // Metodo para obtener el codigo ISO de la moneda base
+  public static String base(int opcion) {
+    return switch (opcion) {
+      case 1 -> "USD";
+      case 2 -> "MXN";
+      default -> throw new IllegalStateException("Unexpected value: " + opcion);
+    };
+  }
+
+  // Metodo para obtener el codigo ISO de la moneda target
+  public static String target(int opcion) {
+    return switch (opcion) {
+      case 1 -> "MXN";
+      case 2 -> "USD";
+      default -> throw new IllegalStateException("Unexpected value: " + opcion);
+    };
   }
 }

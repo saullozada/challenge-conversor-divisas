@@ -8,14 +8,13 @@ import java.net.http.HttpResponse;
 
 public class ConexionApi {
 
-  // Función de conexion al servicio de ExchangeRate-API
-  public void clienteHttp() {
+  /* Metodo para conexion con el servicio de ExchangeRate-API recibiendo
+     el valor de los codigo de monedas */
+  public void clienteHttp(String baseCode, String targetCode) {
 
-    /* Construir la URL para ExchangeRate-API con el Api Key asignado y los datos
-    * de los codigos de las monedas
-    * */
+    // Construccion de URL con APIKEY y los codigos de monedas seleccionados
     var URL_EXCHANGE = "https://v6.exchangerate-api.com/v6/d1b329305202d24f4260c84f/pair/";
-    String urlBase = URL_EXCHANGE + "MXN" + "/" + "USD";
+    String urlBase = URL_EXCHANGE + baseCode + "/" + targetCode;
 
     // Clase HttpClient para construir la conexion y consulta a la API
     HttpClient client = HttpClient.newHttpClient();
@@ -26,7 +25,9 @@ public class ConexionApi {
       HttpResponse<String> response = client
           .send(request, HttpResponse.BodyHandlers.ofString());
 
-      System.out.println(response.body());
+      String json = response.body();
+
+      System.out.println(json);
 
     } catch (IOException e) {
       throw new RuntimeException(e);
