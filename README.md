@@ -78,4 +78,4 @@ cd challenge-conversor-divisas
 Este proyecto es de uso libre para fines educativos. Puedes adaptarlo y mejorarlo citando su origen.
 
 
-Desarrollado por: ***Saúl Lozada Ventura***
+Desarrollado por: ***Saúl L***
