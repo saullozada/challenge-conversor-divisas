@@ -1,45 +1,72 @@
 package com.slve.converter;
 
-import com.slve.converter.model.Menu;
+import com.slve.converter.service.Conexion;
+import com.slve.converter.util.Menus;
+
 import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Principal {
   public static void main(String[] args) {
     Scanner lectura = new Scanner(System.in);
-    int opcion = 0;
+    Menus menu = new Menus();
+    Conexion cliente = new Conexion();
+
+    // Modificar la configuración de región a México
+    Locale local = new Locale("es", "MX");
+    lectura.useLocale(local);
+
+    // Variables de entrada de teclado
+    char opcionMenu = ' ';
+    int opcionMoneda = 0;
 
     // * Inicio - Do While para el menu de la aplicación
     do {
-
-      Menu menu = new Menu();
       menu.principal();
+      System.out.print("Seleccione la opción deseada (a, s): ");
 
-      System.out.print("Elige una opción: ");
-
-      // Inicio - Logica de validacion de la opcion
+      // ** Inicio - Logica de validacion de la opcMenu
       try {
-        opcion = Integer.valueOf(lectura.nextInt());
-        switch (opcion) {
-          case 1:
-            menu.lista();
+        opcionMenu = lectura.next().charAt(0);
+
+        switch (opcionMenu) {
+          case 'a':
+            menu.secundario();
+            try {
+              System.out.print("Moneda Origen: ");
+              opcionMoneda = (int) lectura.next().charAt(0);
+              String baseCode = menu.obtenerIso(opcionMoneda);
+
+              System.out.print("Moneda Destino: ");
+              opcionMoneda = lectura.next().charAt(0);
+              String targetCode = menu.obtenerIso(opcionMoneda);
+
+              System.out.print("Cantidad de " + baseCode + " a convertir: $");
+              double currencyAmount = lectura.nextDouble();
+
+              cliente.conexionHttp(baseCode, targetCode, currencyAmount);
+
+            } catch (Exception e) {
+              System.out.println("\n¡ El valor es incorrecto, \n se cancela la conversion !");
+              lectura.next();
+            }
             break;
-          case 2:
-            System.out.println("\nHistorico de Conversiones");
+          case 'b':
             break;
-          case 0:
+          case 's':
             System.out.println("\nSaliendo de la aplicación...");
             break;
           default:
-            System.out.println("\nInténtalo de nuevo, elige una opción del menú.");
+            System.out.println("\n¡ Opciön incorrecta, seleccione una opción válida !");
         }
-      } catch (InputMismatchException ex) {
-        System.out.println("\nSe require un valor numerico, inténtalo de nuevo,");
+      } catch (InputMismatchException e) {
         lectura.nextLine();
-      } // Fin - Logica de validacion de la opcion elegida
+      }
+      // ** Fin - Logica de validacion de la opcionMenu elegida
 
-    } while (opcion != 0); // * Fin - Do While para el menu de la aplicación
-
+    } while (opcionMenu != 's');
     lectura.close();
+    // * Fin - Do While para el menu de la aplicación
   }
 }

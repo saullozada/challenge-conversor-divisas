@@ -1,6 +1,7 @@
 package com.slve.converter.model;
 
-import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class Datos {
 
@@ -20,15 +21,17 @@ public class Datos {
   }
 
   public void conversionDivisa() {
-    DecimalFormat decimalF = new DecimalFormat("#,###.##");
+    // Utilizo NumberFormat, porque tengo un problema de configuracion en mi laptop
+    NumberFormat numeroF = NumberFormat.getCurrencyInstance(Locale.US);
 
     double montoConversion = montoDivisa * tasaCambio;
 
-    String montoRedondeo = decimalF.format(montoDivisa);
-    String totalMontoConversion = decimalF.format(montoConversion);
+    String montoRedondeo = numeroF.format(montoDivisa);
+    String totalMontoConversion = numeroF.format(montoConversion);
 
     System.out.println("\n--------------------------------------------------");
-    System.out.println("\nResultado de la Conversion");
+    System.out.println("\nDatos de la Conversion");
+    System.out.println("Tipo de Cambio: " + tasaCambio);
     System.out.println("La cantidad de: " + montoRedondeo + " " + divisaBase);
     System.out.println("Corresponden a: " + totalMontoConversion + " " + divisaTarget);
   }
