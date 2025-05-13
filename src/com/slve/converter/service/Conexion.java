@@ -11,7 +11,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class Conexion {
-  final String API_KEY = "d1b329305202d24f4260c84f"; // Definir el valor de la API KEY
+  final String API_KEY = "tu_api_key"; // Definir el valor de la API KEY
 
   /* Metodo para conexion con el servicio de ExchangeRate-API recibiendo
      el valor de los codigo de monedas */

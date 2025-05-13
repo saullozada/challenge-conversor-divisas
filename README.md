@@ -36,7 +36,9 @@ Los requerimientos para la edición o ejecución de la aplicación son:
 ### Ejecución
 
 1. Clonar el repositorio.
-``` Git
+``` bash
+git clone https://github.com/saullozada/challenge-conversor-divisas.git
+cd challenge-conversor-divisas
 ```
 
 2. Abrir la carpeta del proyecto en IntelliJ IDEA.
@@ -51,16 +53,16 @@ Los requerimientos para la edición o ejecución de la aplicación son:
 
 5. Ejecutar la clase `Principal.java` de la aplicación
 
-6. En el ***Menú Principal***, elegir la opción que requiera
+6. En el ***Menú Principal***, elegir la opción requerida
 
    ![image_menu_principal.png|500](resource/image_menu_principal.png)
 
        `** La siguiente versión se implementara la opción de: b. Histórico de conversiones.`
 
 
-7. En el ***Menú Secundario*** seleccionar las opciones que se solicitan.
+7. En el ***Menú Secundario*** seleccionar las opciones de las monedas.
 
-    ![image_menu_secundario.png](resource/image_menu_secundario.png)
+    ![image_menu_secundario.png|500](resource/image_menu_secundario.png)
 
         `** El menú permite tener conversiones entre diferentes monedas`
 
